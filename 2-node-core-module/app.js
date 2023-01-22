@@ -24,3 +24,16 @@ try {
 fs.writeFile("data/asyn.txt", "ini data asinkronus dari js", (error) => {
   console.log(error);
 });
+
+// reading data
+const data1 = fs.readFileSync("data/test.txt", "utf-8");
+console.log(data1);
+
+fs.readFile("data/asyn.txt", { encoding: "utf-8" }, (error, data) => {
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  console.log(data);
+});
