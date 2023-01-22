@@ -3,10 +3,13 @@
 // file system
 const fs = require("node:fs");
 
-// using try catch because asynchronus
+// using try catch because synchronus
 try {
   //making directory
-  fs.mkdirSync("data");
+  // checking if folder data not exist
+  if (!fs.existsSync("data")) {
+    fs.mkdirSync("data");
+  }
 
   //writing string to file from js ( synchronus )
   fs.writeFileSync(
@@ -16,3 +19,8 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+// asynchronous
+fs.writeFile("data/asyn.txt", "ini data asinkronus dari js", (error) => {
+  console.log(error);
+});
