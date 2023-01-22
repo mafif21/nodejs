@@ -1,1 +1,0 @@
-Hi file ini ditulis secara sinkronus menggunakan javascript
