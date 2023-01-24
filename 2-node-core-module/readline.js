@@ -5,6 +5,8 @@ const rl = readline.Interface({
 });
 
 rl.question("What is your name?", (name) => {
-  console.log(`Thank you ${name} for fill the form`);
-  rl.close();
+  rl.question("How old are you?", (age) => {
+    console.log(`I see your name is ${name} and then you are ${age} years old`);
+    rl.close();
+  });
 });
