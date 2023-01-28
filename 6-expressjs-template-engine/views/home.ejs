@@ -1,0 +1,18 @@
+<div>
+  <h1>Homepage</h1>
+  <p>hello all my name is <%= name %></p>
+
+  <% if (students.length > 0) { %>
+    <ul>
+      <% students.forEach(student => { %>
+        <li>
+          name : <%= student.name %> <br />
+          nim : <%= student.nim %> <br />
+          active : <%= student.active %> <br />
+        </li>
+      <% }) %>
+    </ul>
+  <% }else{ %>
+      <p>Data is empty</p>
+  <% } %>
+</div>
