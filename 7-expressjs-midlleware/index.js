@@ -1,5 +1,6 @@
 import express from "express";
 import expressLayouts from "express-ejs-layouts";
+import morgan from "morgan";
 
 const app = express();
 const port = 3000;
@@ -25,19 +26,20 @@ const students = [
 
 // setting template engine to ejs
 app.set("view engine", "ejs");
+// third party middleware
+app.use(morgan("dev"));
 
 // confugure using ejs layouts
-app.use(expressLayouts);
+app.use(expressLayouts); //this is middleware
 
 // middleware
+// built in middleware
+app.use(express.static("public"));
+
 // harus ada next kalau tidak maka akan hang
+// app middleware
 app.use((req, res, next) => {
   console.log("Time:", Date.now() * 7);
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log("ini middleware ke dua");
   next();
 });
 
