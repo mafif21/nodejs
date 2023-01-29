@@ -18,4 +18,13 @@ const loadData = () => {
   return data;
 };
 
-module.exports = { loadData };
+const findData = (name) => {
+  const data = loadData();
+  const target = data.find((value) => {
+    return value.name === name;
+  });
+
+  return target;
+};
+
+module.exports = { loadData, findData };

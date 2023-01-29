@@ -13,6 +13,13 @@
         </tr>
       </thead>
       <tbody>
+        <% if (contacts.length === 0) { %>
+        <tr>
+          <td colspan="5">
+            <div class="alert alert-danger mt-4" role="alert">Data Empty</div>
+          </td>
+        </tr>
+        <% }else{ %>
         <!-- inisiasi -->
         <% contacts.forEach((contact, index) => { %>
         <tr>
@@ -21,10 +28,12 @@
           <td><%= contact.email %></td>
           <td><%= contact.phone %></td>
           <td>
-            <a href="/detail" class="btn btn-primary">Detail</a>
+            <a href="/contact/<%= contact.name %> " class="btn btn-primary"
+              >Detail</a
+            >
           </td>
         </tr>
-        <% }) %>
+        <% }) %> <% } %>
       </tbody>
     </table>
   </div>
