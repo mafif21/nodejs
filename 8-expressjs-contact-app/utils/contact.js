@@ -37,4 +37,9 @@ const addContact = (value) => {
   saveFile(data);
 };
 
-module.exports = { loadData, findData, addContact };
+const checkDuplicate = (name) => {
+  const datas = loadData();
+  return datas.find((value) => value.name === name);
+};
+
+module.exports = { loadData, findData, addContact, checkDuplicate };

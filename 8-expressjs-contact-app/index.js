@@ -1,7 +1,13 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-const { loadData, findData, addContact } = require("./utils/contact");
+const {
+  loadData,
+  findData,
+  addContact,
+  checkDuplicate,
+} = require("./utils/contact");
 const bodyParser = require("body-parser");
+const { body, validationResult, check } = require("express-validator");
 
 const app = express();
 const port = 3000;
@@ -34,11 +40,28 @@ app.get("/contact", (req, res) => {
   res.render("contact", { layout: "layouts/main", contacts });
 });
 
-app.post("/contact", (req, res) => {
-  addContact(req.body);
-  // 21.01
-  res.redirect("/contact");
-});
+app.post(
+  "/contact",
+  [
+    body("name").custom((nameUser) => {
+      const duplicate = checkDuplicate(nameUser);
+      if (duplicate) {
+        throw new Error("Name already exists");
+      }
+      return true;
+    }),
+    check("email", "Domain not valid").isEmail(),
+    check("phone", "Phone not valid").isMobilePhone("id-ID"),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    // addContact(req.body);
+    // res.redirect("/contact");
+  }
+);
 
 app.get("/contact/add", (req, res) => {
   res.render("add", { layout: "layouts/main", title: "Add" });
