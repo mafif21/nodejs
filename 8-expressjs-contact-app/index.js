@@ -30,6 +30,11 @@ app.get("/contact", (req, res) => {
   res.render("contact", { layout: "layouts/main", contacts });
 });
 
+// add page
+app.get("/contact/add", (req, res) => {
+  res.render("add", { layout: "layouts/main" });
+});
+
 app.get("/contact/:name", (req, res) => {
   const contact = findData(req.params.name);
   res.render("detail", { layout: "layouts/main", contact });
