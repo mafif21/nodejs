@@ -27,4 +27,14 @@ const findData = (name) => {
   return target;
 };
 
-module.exports = { loadData, findData };
+const saveFile = (data) => {
+  fs.writeFileSync(filePath, JSON.stringify(data));
+};
+
+const addContact = (value) => {
+  const data = loadData();
+  data.push(value);
+  saveFile(data);
+};
+
+module.exports = { loadData, findData, addContact };

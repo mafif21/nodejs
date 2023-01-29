@@ -1,6 +1,6 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-const { loadData, findData } = require("./utils/contact");
+const { loadData, findData, addContact } = require("./utils/contact");
 const bodyParser = require("body-parser");
 
 const app = express();
@@ -35,8 +35,9 @@ app.get("/contact", (req, res) => {
 });
 
 app.post("/contact", (req, res) => {
-  console.log(req.body);
-  res.send("Data Added");
+  addContact(req.body);
+  // 21.01
+  res.redirect("/contact");
 });
 
 app.get("/contact/add", (req, res) => {
