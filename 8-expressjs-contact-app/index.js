@@ -1,28 +1,9 @@
-import express from "express";
-import expressLayouts from "express-ejs-layouts";
-import morgan from "morgan";
+const express = require("express");
+const expressLayouts = require("express-ejs-layouts");
+const { loadData } = require("./utils/contact");
 
 const app = express();
 const port = 3000;
-
-// data
-const students = [
-  {
-    name: "Muhammad Afif",
-    nim: 1202202052,
-    active: true,
-  },
-  {
-    name: "Ahmad Sutanji",
-    nim: 388371733919,
-    active: true,
-  },
-  {
-    name: "Hasan Mustofa",
-    nim: 12028383746,
-    active: false,
-  },
-];
 
 // setting template engine to ejs
 app.set("view engine", "ejs");
@@ -36,7 +17,6 @@ app.get("/", (req, res) => {
   res.render("home", {
     name: "lele",
     title: "Home",
-    students,
     layout: "layouts/main",
   });
 });
@@ -46,6 +26,11 @@ app.get("/about", (req, res) => {
 });
 
 app.get("/contact", (req, res) => {
+  const contacts = loadData();
+  res.render("contact", { layout: "layouts/main", contacts });
+});
+
+app.get("/detail/:id", (req, res) => {
   res.render("contact", { layout: "layouts/main" });
 });
 

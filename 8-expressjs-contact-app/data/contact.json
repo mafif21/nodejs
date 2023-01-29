@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Muhammad Afif",
+    "email": "muhammadafif@gmail.com",
+    "phone": "0813938774527",
+    "active": true
+  },
+  {
+    "name": "Ahmad Sutanji",
+    "email": "ahmadsutaji@gmail.com",
+    "phone": "081288464773",
+    "active": true
+  },
+  {
+    "name": "Hasan Mustofa",
+    "email": "hasan@gmail.com",
+    "phone": "08277454427",
+    "active": false
+  }
+]
