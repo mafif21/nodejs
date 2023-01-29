@@ -1,6 +1,7 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const { loadData, findData } = require("./utils/contact");
+const bodyParser = require("body-parser");
 
 const app = express();
 const port = 3000;
@@ -12,6 +13,9 @@ app.use(expressLayouts);
 // middleware
 // built in middleware
 app.use(express.static("public"));
+
+// mddleware for post method
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.render("home", {
@@ -30,9 +34,13 @@ app.get("/contact", (req, res) => {
   res.render("contact", { layout: "layouts/main", contacts });
 });
 
-// add page
+app.post("/contact", (req, res) => {
+  console.log(req.body);
+  res.send("Data Added");
+});
+
 app.get("/contact/add", (req, res) => {
-  res.render("add", { layout: "layouts/main" });
+  res.render("add", { layout: "layouts/main", title: "Add" });
 });
 
 app.get("/contact/:name", (req, res) => {
