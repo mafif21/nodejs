@@ -40,6 +40,10 @@ app.get("/contact", (req, res) => {
   res.render("contact", { layout: "layouts/main", contacts });
 });
 
+app.get("/contact/add", (req, res) => {
+  res.render("add", { layout: "layouts/main", title: "Add" });
+});
+
 app.post(
   "/contact",
   [
@@ -56,16 +60,17 @@ app.post(
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      // return res.status(400).json({ errors: errors.array() });
+      res.render("add", {
+        layout: "layouts/main",
+        title: "Add",
+        errors: errors.array(),
+      });
     }
     // addContact(req.body);
     // res.redirect("/contact");
   }
 );
-
-app.get("/contact/add", (req, res) => {
-  res.render("add", { layout: "layouts/main", title: "Add" });
-});
 
 app.get("/contact/:name", (req, res) => {
   const contact = findData(req.params.name);
