@@ -23,6 +23,23 @@ app.use(express.static("public"));
 // mddleware for post method
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// flash message
+const session = require("express-session");
+const cookie = require("cookie-parser");
+const flash = require("connect-flash");
+
+// configuration
+app.use(
+  session({
+    cookie: { maxAge: 6000 },
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.use(flash());
+
 app.get("/", (req, res) => {
   res.render("home", {
     name: "lele",
@@ -37,7 +54,11 @@ app.get("/about", (req, res) => {
 
 app.get("/contact", (req, res) => {
   const contacts = loadData();
-  res.render("contact", { layout: "layouts/main", contacts });
+  res.render("contact", {
+    layout: "layouts/main",
+    contacts,
+    msg: req.flash("msg"),
+  });
 });
 
 app.get("/contact/add", (req, res) => {
@@ -67,8 +88,11 @@ app.post(
         errors: errors.array(),
       });
     }
-    // addContact(req.body);
-    // res.redirect("/contact");
+    addContact(req.body);
+
+    // send flash message
+    req.flash("msg", "Add Data Success");
+    res.redirect("/contact");
   }
 );
 
