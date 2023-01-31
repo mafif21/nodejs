@@ -33,9 +33,16 @@
           <td><%= contact.email %></td>
           <td><%= contact.phone %></td>
           <td>
-            <a href="/contact/<%= contact.name %> " class="btn btn-success"
-              >Detail</a
-            >
+            <div class="d-flex gap-2">
+              <a href="/contact/<%= contact.name %> " class="btn btn-success"
+                >Detail</a
+              >
+              <a
+                href="/contact/delete/<%= contact.name %> "
+                class="btn btn-danger"
+                >Delete</a
+              >
+            </div>
           </td>
         </tr>
         <% }) %> <% } %>

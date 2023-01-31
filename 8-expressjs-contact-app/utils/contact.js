@@ -42,4 +42,12 @@ const checkDuplicate = (name) => {
   return datas.find((value) => value.name === name);
 };
 
-module.exports = { loadData, findData, addContact, checkDuplicate };
+const deleteData = (unique) => {
+  const datas = loadData();
+  const remove = datas.findIndex((value) => value.name == unique);
+  datas.splice(remove, 1);
+
+  fs.writeFileSync(filePath, JSON.stringify(datas));
+};
+
+module.exports = { loadData, findData, addContact, checkDuplicate, deleteData };

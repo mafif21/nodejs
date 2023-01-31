@@ -5,6 +5,7 @@ const {
   findData,
   addContact,
   checkDuplicate,
+  deleteData,
 } = require("./utils/contact");
 const bodyParser = require("body-parser");
 const { body, validationResult, check } = require("express-validator");
@@ -99,6 +100,11 @@ app.post(
 app.get("/contact/:name", (req, res) => {
   const contact = findData(req.params.name);
   res.render("detail", { layout: "layouts/main", contact });
+});
+
+app.get("/contact/delete/:name", (req, res) => {
+  deleteData(req.params.name);
+  res.redirect("/contact");
 });
 
 app.use((req, res) => {
