@@ -6,6 +6,7 @@ const {
   addContact,
   checkDuplicate,
   deleteData,
+  changeData,
 } = require("./utils/contact");
 const bodyParser = require("body-parser");
 const { body, validationResult, check } = require("express-validator");
@@ -97,15 +98,58 @@ app.post(
   }
 );
 
+app.get("/contact/delete/:name", (req, res) => {
+  deleteData(req.params.name);
+  req.flash("msg", "Delete data success");
+  res.redirect("/contact");
+});
+
+app.get("/contact/edit/:name", (req, res) => {
+  const contact = findData(req.params.name);
+  res.render("edit", {
+    layout: "layouts/main",
+    contact,
+    title: "Edit",
+    msg: req.flash("msg"),
+  });
+});
+
 app.get("/contact/:name", (req, res) => {
   const contact = findData(req.params.name);
   res.render("detail", { layout: "layouts/main", contact });
 });
 
-app.get("/contact/delete/:name", (req, res) => {
-  deleteData(req.params.name);
-  res.redirect("/contact");
-});
+app.post(
+  "/contact/update",
+  [
+    body("name").custom((name, { req }) => {
+      if (name !== req.body.oldName) {
+        const duplicate = checkDuplicate(name);
+        if (duplicate) {
+          throw new Error("Name already exists");
+        }
+        return true;
+      }
+    }),
+    check("email", "Email domain is not valid").isEmail(),
+    check("phone", "Phone number is not Indonesian ").isMobilePhone("id-ID"),
+  ],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render("edit", {
+        layout: "layouts/main",
+        title: "edit",
+        errors: errors.array(),
+        contact: req.body,
+      });
+    }
+
+    changeData(req.body);
+    req.flash("msg", "Edit Data Success");
+    res.redirect("/contact");
+  }
+);
 
 app.use((req, res) => {
   res.status(404);

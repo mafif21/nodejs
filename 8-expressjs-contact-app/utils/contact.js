@@ -44,10 +44,30 @@ const checkDuplicate = (name) => {
 
 const deleteData = (unique) => {
   const datas = loadData();
-  const remove = datas.findIndex((value) => value.name == unique);
-  datas.splice(remove, 1);
-
-  fs.writeFileSync(filePath, JSON.stringify(datas));
+  const remove = datas.filter((value) => value.name !== unique);
+  saveFile(remove);
 };
 
-module.exports = { loadData, findData, addContact, checkDuplicate, deleteData };
+const changeData = (data) => {
+  const datas = loadData();
+  datas.findIndex((value) => {
+    if (value.name == data.oldName) {
+      value.name = data.name;
+      value.phone = data.phone;
+      value.email = data.email;
+    }
+  });
+  delete data.oldName;
+  saveFile(datas);
+
+  // saveFile(datas);
+};
+
+module.exports = {
+  loadData,
+  findData,
+  addContact,
+  checkDuplicate,
+  deleteData,
+  changeData,
+};
