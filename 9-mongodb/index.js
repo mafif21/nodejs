@@ -24,23 +24,33 @@ client.connect((err, client) => {
   //   }
   // );
 
-  db.collection("user").insertMany(
-    [
-      {
-        name: "Suharto",
-        age: 32,
-        isAdmin: true,
-      },
-      {
-        name: "Siti",
-        age: 21,
-        isAdmin: false,
-      },
-    ],
-    (err, res) => {
-      if (err) return console.log("Data cant input in database");
-      console.log("Data success input");
-      console.log(res);
-    }
+  // db.collection("user").insertMany(
+  //   [
+  //     {
+  //       name: "Suharto",
+  //       age: 32,
+  //       isAdmin: true,
+  //     },
+  //     {
+  //       name: "Siti",
+  //       age: 21,
+  //       isAdmin: false,
+  //     },
+  //   ],
+  //   (err, res) => {
+  //     if (err) return console.log("Data cant input in database");
+  //     console.log("Data success input");
+  //     console.log(res);
+  //   }
+  // );
+
+  // show all data same as (select * from table_name)
+  console.log(
+    db
+      .collection("user")
+      .find()
+      .toArray((err, res) => {
+        console.table(res);
+      })
   );
 });
