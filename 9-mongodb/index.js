@@ -16,11 +16,31 @@ client.connect((err, client) => {
   const db = client.db(dbName);
 
   // insert one data to mongodb
-  db.collection("user").insertOne(
-    { name: "Paijo", age: 80, isAdmin: true },
+  // db.collection("user").insertOne(
+  //   { name: "Paijo", age: 80, isAdmin: true },
+  //   (err, res) => {
+  //     if (err) return console.log("Data cant input in database");
+  //     console.log("Data success input");
+  //   }
+  // );
+
+  db.collection("user").insertMany(
+    [
+      {
+        name: "Suharto",
+        age: 32,
+        isAdmin: true,
+      },
+      {
+        name: "Siti",
+        age: 21,
+        isAdmin: false,
+      },
+    ],
     (err, res) => {
       if (err) return console.log("Data cant input in database");
       console.log("Data success input");
+      console.log(res);
     }
   );
 });
