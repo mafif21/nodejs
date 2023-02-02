@@ -1,15 +1,17 @@
 const { MongoClient } = require("mongodb");
 
-const url = "mongodb://127.0.0.1:3000";
-const client = new MongoClient(url);
-
-client.connect((err, data) => {
-  if (err) return console.log("connect failed");
-  console.log("connect success");
+const uri = "mongodb://127.0.0.1:27017";
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-// second params for variable client
-// {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// }
+client.connect((err, client) => {
+  if (err) return console.log("cant connect this local db");
+
+  // collection name
+  const colName = "coba";
+
+  // choose collection
+  const db = client.db(colName);
+});
