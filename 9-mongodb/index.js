@@ -45,10 +45,20 @@ client.connect((err, client) => {
   // );
 
   // show all data same as (select * from table_name)
+  // console.log(
+  //   db
+  //     .collection("user")
+  //     .find()
+  //     .toArray((err, res) => {
+  //       console.table(res);
+  //     })
+  // );
+
+  // show spesific data from mongo db same as (select * from table_name where name="...")
   console.log(
     db
       .collection("user")
-      .find()
+      .find({ name: "Nurhuda" })
       .toArray((err, res) => {
         console.table(res);
       })
