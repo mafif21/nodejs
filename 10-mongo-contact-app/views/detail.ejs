@@ -1,0 +1,24 @@
+<div class="my-4">
+  <h1>Detail Contact</h1>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque iste
+    omnis minus ullam sed saepe eum ratione, enim quae eaque?
+  </p>
+
+  <% if (!contact) { %>
+  <div class="alert alert-danger mt-4" role="alert">
+    Data Unknown
+    <a href="/contact" class="alert-link">Back to Contact</a>
+  </div>
+  <% }else{ %>
+  <div class="mt-4">
+    <div class="card" style="width: 18rem">
+      <div class="card-body">
+        <h5 class="card-title"><%= contact.name %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= contact.phone %></h6>
+        <p class="card-text"><%= contact.email %></p>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
