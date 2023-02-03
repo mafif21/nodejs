@@ -6,6 +6,16 @@
   </p>
 
   <div class="my-4">
+    <% if (typeof errors !== 'undefined') { %>
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <% errors.forEach(error => { %>
+        <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+    <% }%>
+
     <div class="mt-4">
       <a href="/contact/add" class="btn btn-primary mb-4">Add data</a>
       <% if (msg.length != 0) { %>
@@ -41,11 +51,14 @@
                 <a href="/contact/<%= contact.name %> " class="btn btn-success"
                   >Detail</a
                 >
-                <a
-                  href="/contact/delete/<%= contact.name %> "
-                  class="btn btn-danger"
-                  >Delete</a
-                >
+                <form action="/contact?_method=DELETE" method="post">
+                  <input
+                    type="hidden"
+                    value="<%= contact.name %>"
+                    name="name"
+                  />
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
                 <a
                   href="/contact/edit/<%= contact.name %> "
                   class="btn btn-primary"
