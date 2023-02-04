@@ -110,6 +110,20 @@ app.get("/contact/add", (req, res) => {
   });
 });
 
+app.get("/contact/edit/:name", async (req, res) => {
+  const contact = await user.findOne({ name: req.params.name });
+  if (!contact) {
+    res.status(404);
+    res.send("<h1>Data Unknown</h1>");
+  }
+
+  res.render("edit", {
+    title: "Edit",
+    layout: "layouts/main",
+    contact,
+  });
+});
+
 app.get("/contact/:name", async (req, res) => {
   const contact = await user.findOne({ name: req.params.name });
   try {
@@ -142,6 +156,47 @@ app.delete("/contact", async (req, res) => {
   req.flash("msg", "Delete success");
   res.redirect("/contact");
 });
+
+app.put(
+  "/contact",
+  [
+    body("name").custom(async (value, { req }) => {
+      if (value !== req.body.oldName) {
+        const duplicateCheck = await user.findOne({ name: value });
+        if (duplicateCheck) {
+          throw new Error("Name already exists");
+        }
+      }
+      return true;
+    }),
+    check("email", "Domain not valid").isEmail(),
+    check("phone", "Phone must be indonesian number").isMobilePhone("id-ID"),
+  ],
+  async (req, res) => {
+    const errrors = validationResult(req);
+    if (!errrors.isEmpty()) {
+      res.render("edit", {
+        title: "Edit",
+        layout: "layouts/main",
+        contact: req.body,
+        errors: errrors.array(),
+      });
+    } else {
+      await user.updateOne(
+        { id: req.id },
+        {
+          $set: {
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+          },
+        }
+      );
+      req.flash("msg", "Edit data success");
+      res.redirect("/contact");
+    }
+  }
+);
 
 app.use((req, res) => {
   res.status(404);

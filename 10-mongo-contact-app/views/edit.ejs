@@ -1,0 +1,52 @@
+<div class="my-4">
+  <% if (typeof errors !== 'undefined') { %>
+  <div class="alert alert-danger" role="alert">
+    <ul>
+      <% errors.forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  </div>
+  <% }%>
+
+  <form method="post" action="/contact?_method=PUT">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="hidden"
+        value="<%= contact.oldName || contact.name %>"
+        id="oldName"
+        name="oldName"
+      />
+      <input type="hidden" value="<%= contact._id %>" id="id" name="id" />
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        value="<%=contact.name%>"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        value="<%= contact.email %> "
+      />
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input
+        type="phone"
+        class="form-control"
+        id="phone"
+        name="phone"
+        value="<%=contact.phone%>"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Edit</button>
+  </form>
+</div>
